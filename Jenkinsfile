@@ -7,7 +7,7 @@ pipeline {
           sh 'ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "echo test"'
         }
 
-        git(branch: 'master', credentialsId: 'COMP_SSH', url: 'ssh://thootau99@github.com/ci_php_release.git', poll: true)
+        git(branch: 'master', credentialsId: 'COMP_SSH', url: 'https://github.com/thootau99/ci_php_release.git', poll: true)
         sh 'ls -lat'
       }
     }
