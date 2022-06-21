@@ -21,6 +21,7 @@ pipeline {
          sh 'cd ci_php_release'
          sh 'version=$(cat .version)'
          sh 'echo $pwd && ls -lat && ls -lat ../'
+         sh 'git config --gloabl user.email "thootau99@tutanota.com" && git config --global user.name "thootau"'
          sh 'cd ci_php_release && git add . && git commit -m "PUSH TO VERSION $version"'
          sh 'cd ci_php_release && git checkout -b release/version_${version} && git push -u'
          //sh 'git checkout -b release/latest && git push -u'
