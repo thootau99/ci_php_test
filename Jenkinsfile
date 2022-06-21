@@ -8,10 +8,11 @@ pipeline {
         }
         withCredentials([gitUsernamePassword(credentialsId: 'thootau99',
                 gitToolName: 'git-tool')]) {
-         sh 'rsync -av . ./build --exclude build --exclude=".*/"'
+         sh 'mkdir build'
+         sh 'cp -r ./* ./build'
          sh 'git clone https://github.com/thootau99/ci_php_release.git'
          sh 'rm -rf ./ci_php_release/*'
-         sh 'rsync -av ./build/* ./ci_php_release --exclude build --exclude=".*/"'
+         sh 'cp -r ./build/* ./ci_php_release'
          sh 'cd ci_php_release'
          sh 'version=$(cat ../.version)'
          sh 'git add . && git commit -m "PUSH TO VERSION $version"'
