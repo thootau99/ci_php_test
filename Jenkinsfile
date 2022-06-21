@@ -16,7 +16,7 @@ pipeline {
          sh 'version=$(cat ../.version)'
          sh 'git add . && git commit -m "PUSH TO VERSION $version"'
          sh 'git checkout -b release/version_${version} && git push -u'
-         #sh 'git checkout -b release/latest && git push -u'
+         //sh 'git checkout -b release/latest && git push -u'
        } 
 
         sh 'cd ..'
