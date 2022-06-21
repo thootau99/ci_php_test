@@ -12,6 +12,8 @@ pipeline {
          //sh 'mkdir build'
          //sh 'cp -r ./* ./build'
          sh 'rsync -av . ./build --exclude build --exclude=".*/"'
+         sh 'ls -lat'
+         sh 'rm -rf ci_php_release'
          sh 'git clone https://github.com/thootau99/ci_php_release.git'
          sh 'rm -rf ./ci_php_release/*'
          sh 'rsync -av ./build/* ./ci_php_release --exclude build --exclude=".*/"'
