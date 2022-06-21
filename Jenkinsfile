@@ -19,10 +19,10 @@ pipeline {
          sh 'rsync -av ./build/* ./ci_php_release --exclude build --exclude=".*/"'
          //sh 'cp -r ./build/* ./ci_php_release'
          sh 'cd ci_php_release'
-         sh 'version=3'
+         sh 'version=$(cat .version)'
          sh 'echo $pwd && ls -lat && ls -lat ../'
-         sh 'cd ~/ci_php_release && git add . && git commit -m "PUSH TO VERSION $version"'
-         sh 'cd ~/ci_php_release && git checkout -b release/version_${version} && git push -u'
+         sh 'cd ci_php_release && git add . && git commit -m "PUSH TO VERSION $version"'
+         sh 'cd ci_php_release && git checkout -b release/version_${version} && git push -u'
          //sh 'git checkout -b release/latest && git push -u'
        } 
 
