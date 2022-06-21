@@ -8,6 +8,7 @@ pipeline {
         }
 
         git(branch: 'master', credentialsId: 'COMP_SSH', url: 'https://github.com/thootau99/ci_php_release.git', poll: true)
+        sh 'cd ~'
         sh 'ls -lat'
       }
     }
