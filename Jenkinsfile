@@ -22,10 +22,10 @@ pipeline {
          sh 'rsync -av ./build/* ./ci_php_release --exclude build --exclude=".*/"'
          
           
-          //7. 開推，先設定 git 資訊；再創造一個 commit；再切到新分支內推上去 (分支格式為 release/version_{version number})
+          //7. 開推，先設定 git 資訊；再創造一個 commit；再切到新分支內推上去 (分支格式為 release/2022-06-21_17:50 tag為 v1 這樣的格式)
          sh 'git config --global user.email "thootau99@tutanota.com" && git config --global user.name "thootau"'
          sh 'cd ci_php_release && git add . && git commit -m "PUSH TO VERSION $(cat ../.version)"'
-         sh 'cd ci_php_release && git checkout -b release/version_$(cat ../.version) && git push --set-upstream origin release/version_$(cat ../.version)'
+         sh 'cd ci_php_release && git tag -a 'v$(cat ../.version)' -m 'PUSH TO VERSION $(cat ../.version)' && git push origin v$(cat ../.version)'
        } 
       }
     }
