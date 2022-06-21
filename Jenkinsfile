@@ -2,33 +2,31 @@ pipeline {
   agent any
   stages {
     stage('Build') {
+      // 1. 先安裝 rsync (複製檔案用)
       steps {
         sh 'apt install rsync -y'
-        withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'HOST', keyFileVariable: 'SSH_KEY')]) {
-          sh 'ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "echo test"'
-        }
+        // 2. 把要用來放 build 完的 git 專案 clone 下來
         withCredentials([gitUsernamePassword(credentialsId: 'thootau99',
                 gitToolName: 'git-tool')]) {
-         //sh 'mkdir build'
-         //sh 'cp -r ./* ./build'
+         //3. 這邊模仿 build 檔案，把檔案全部抓到一個 build 目錄下。
          sh 'rsync -av . ./build --exclude build --exclude=".*/"'
-         sh 'ls -lat'
+          
+         //4. clone 前先把上次可能忘記清掉的資料夾清除
          sh 'rm -rf ci_php_release'
          sh 'git clone https://github.com/thootau99/ci_php_release.git'
+          
+         //5. 把該 git 專案內的內容清空，待會會把 build 好的資料全部放進來所以可以全刪
          sh 'rm -rf ./ci_php_release/*'
+          
+         //6. 把 build 好的檔案移動過來
          sh 'rsync -av ./build/* ./ci_php_release --exclude build --exclude=".*/"'
-         //sh 'cp -r ./build/* ./ci_php_release'
-         sh 'cd ci_php_release'
-         sh 'version=$(cat .version)'
-         sh 'echo $pwd && ls -lat && ls -lat ../'
+         
+          
+          //7. 開推，先設定 git 資訊；再創造一個 commit；再切到新分支內推上去 (分支格式為 release/version_{version number})
          sh 'git config --global user.email "thootau99@tutanota.com" && git config --global user.name "thootau"'
          sh 'cd ci_php_release && git add . && git commit -m "PUSH TO VERSION $(cat ../.version)"'
          sh 'cd ci_php_release && git checkout -b release/version_$(cat ../.version) && git push --set-upstream origin release/version_$(cat ../.version)'
-         //sh 'git checkout -b release/latest && git push -u'
        } 
-
-        sh 'cd ..'
-        sh 'ls -lat'
       }
     }
 
