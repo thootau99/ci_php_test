@@ -22,8 +22,8 @@ pipeline {
          sh 'version=$(cat .version)'
          sh 'echo $pwd && ls -lat && ls -lat ../'
          sh 'git config --global user.email "thootau99@tutanota.com" && git config --global user.name "thootau"'
-         sh 'cd ci_php_release && git add . && git commit -m "PUSH TO VERSION $version"'
-         sh 'cd ci_php_release && git checkout -b release/version_${version} && git push --set-upstream origin release/version_${version}'
+         sh 'cd ci_php_release && git add . && git commit -m "PUSH TO VERSION $(cat ../.version)"'
+         sh 'cd ci_php_release && git checkout -b release/version_$(cat ../.version) && git push --set-upstream origin release/version_$(cat ../.version)'
          //sh 'git checkout -b release/latest && git push -u'
        } 
 
