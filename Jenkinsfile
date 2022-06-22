@@ -41,7 +41,7 @@ pipeline {
       steps {
         withCredentials(bindings: [gitUsernamePassword(credentialsId: 'thootau99',
                         gitToolName: 'git-tool')]) {
-          sh 'git clone https://github.com/thootau99/ci_php_release.git'
+          sh 'git clone https://github.com/thootau99/ci_php_release.git --branch latest'
 
         }
         withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'HOST', keyFileVariable: 'SSH_KEY')]) {
