@@ -16,7 +16,7 @@ pipeline {
             cd ci_php_release
             version=v$(cat ../.version)
             if [ $(git tag -l "$version") ]; then
-              version=$version-$(date +"%F_%T")-repeat
+              version=$version-$(date +"%s")-repeat
             fi
             git add .
             git commit -m "PUSH TO VERSION $version"
