@@ -12,8 +12,18 @@ pipeline {
           sh 'rm -rf ./ci_php_release/*'
           sh 'rsync -av ./build/* ./ci_php_release --exclude build --exclude=".*/"'
           sh 'git config --global user.email "thootau99@tutanota.com" && git config --global user.name "thootau"'
-          sh 'cd ci_php_release && git add . && git commit -m "PUSH TO VERSION $(cat ../.version)"'
-          sh 'cd ci_php_release && git tag -a "v$(cat ../.version)" -m "PUSH TO VERSION $(cat ../.version)" && git push origin v$(cat ../.version)'
+          sh '''
+            cd ci_php_release
+            version=v$(cat ../.version)
+            if [ $(git tag -l "$version") ]; then
+              version=$version-repeat
+            fi
+            git add .
+            git commit -m "PUSH TO VERSION $(cat ../.version)"
+
+            git tag -a "v$(cat ../.version)" -m "PUSH TO VERSION $version"
+            git push origin $version'
+          '''
         }
 
       }
