@@ -6,7 +6,7 @@ pipeline {
         sh 'apt install rsync -y'
         sh '''
           # 模擬 Build 的步驟，把檔案全部搬到一個叫 build 的資料夾內 (除了隱藏檔、build自己本身)
-          rsync -av . ./build --exclude build"
+          rsync -av . ./build --exclude build
         '''
         sh '''
           git config --global user.email "ci@thootau999.me" && git config --global user.name "ci-robot"
