@@ -61,9 +61,9 @@ pipeline {
             # 2. 再建一個空目錄(跟原本的部屬同名)
             # 3. 把從 git 上拉下來最新版本的檔案丟到剛剛建立的空目錄內
 
-            ssh -p 22 -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "rm -rf /home/thootau/apache/release"
-            ssh -p 22 -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "mkdir -p /home/thootau/apache/release"
-            scp -p 22 -i ${SSH_KEY} -oStrictHostKeyChecking=no -r ./ci_php_test/* thootau@192.168.76.252:/home/thootau/apache/release
+            ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "rm -rf /home/thootau/apache/release"
+            ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "mkdir -p /home/thootau/apache/release"
+            scp -i ${SSH_KEY} -oStrictHostKeyChecking=no -r ./ci_php_test/* thootau@192.168.76.252:/home/thootau/apache/release
           '''
         }
 
