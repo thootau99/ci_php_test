@@ -32,6 +32,7 @@ pipeline {
             git push --force origin latest
           '''
         }
+        cleanWs(cleanWhenFailure: true, cleanWhenAborted: true, cleanWhenNotBuilt: true, cleanWhenSuccess: true, cleanWhenUnstable: true)
 
       }
     }
