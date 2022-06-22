@@ -30,8 +30,11 @@ pipeline {
           sh '''
             cd ci_php_release
             # 推到 latest 上
+            if [ $(git tag -l latest) ]; then
+              git tag -d latest # 先把原本的 latest 刪掉
+            fi
             git tag -a latest -m "PUSH TO VERSION $version"
-            git push -f origin latest
+            git push --delete origin latest
           '''
         }
 
