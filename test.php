@@ -1,3 +1,3 @@
 <?php
-	echo "RANDOM version ChAnGe"
+	echo "果たして LATEST は変えられるでしょうか"
 ?>
