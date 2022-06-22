@@ -23,6 +23,7 @@ pipeline {
           fi
 
           # 把目前的更改 commit 並 push 上 $version 這個 tag
+          echo $(date + "%s") > build_time
           git add .
           git commit -m "PUSH TO VERSION $version"
 
