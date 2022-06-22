@@ -1,3 +1,3 @@
 <?php
-	echo "version 1"
+	echo "RANDOM version ChAnGe"
 ?>
