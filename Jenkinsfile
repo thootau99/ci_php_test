@@ -24,8 +24,6 @@ pipeline {
 
             git tag -a $version -m "PUSH TO VERSION $version"
             git push origin $version
-
-            
           '''
           sh '''
             cd ci_php_release
@@ -33,6 +31,22 @@ pipeline {
             git tag -fa latest -m "PUSH TO VERSION $version"
             git push --force origin latest
           '''
+        }
+
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        withCredentials(bindings: [gitUsernamePassword(credentialsId: 'thootau99',
+                        gitToolName: 'git-tool')]) {
+          sh 'git clone https://github.com/thootau99/ci_php_release.git'
+
+        }
+        withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'HOST', keyFileVariable: 'SSH_KEY')]) {
+          sh 'ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "mkdir -p /home/thootau/apache/release"'
+          sh 'ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "rm -rf /home/thootau/apache/release/*"'
+          sh 'scp -i ${SSH_KEY} -oStrictHostKeyChecking=no -r ./ci_php_release/* thootau@192.168.76.252:/home/thootau/apache/release'
         }
 
       }
