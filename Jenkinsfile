@@ -22,7 +22,7 @@ pipeline {
             git commit -m "PUSH TO VERSION $version"
 
             git tag -a $version -m "PUSH TO VERSION $version"
-            git push origin $version'
+            git push origin $version
           '''
         }
 
