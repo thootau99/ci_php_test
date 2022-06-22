@@ -19,9 +19,9 @@ pipeline {
               version=$version-repeat
             fi
             git add .
-            git commit -m "PUSH TO VERSION $(cat ../.version)"
+            git commit -m "PUSH TO VERSION $version"
 
-            git tag -a "v$(cat ../.version)" -m "PUSH TO VERSION $version"
+            git tag -a $version -m "PUSH TO VERSION $version"
             git push origin $version'
           '''
         }
