@@ -17,6 +17,7 @@ pipeline {
             # 推到這個版本的 tag 上
             cd build
 
+            git fetch --all --tags
             # 定義版本號碼 (應該要寫在 .version 內)
             version=v$(cat ../.version)
             if [ $(git tag -l "$version") ]; then
