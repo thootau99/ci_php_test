@@ -45,8 +45,8 @@ pipeline {
 
         }
         withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'HOST', keyFileVariable: 'SSH_KEY')]) {
+          sh 'ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "rm -rf /home/thootau/apache/release"'
           sh 'ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "mkdir -p /home/thootau/apache/release"'
-          sh 'ssh -i ${SSH_KEY} -oStrictHostKeyChecking=no thootau@192.168.76.252 "rm -rf /home/thootau/apache/release/*"'
           sh 'scp -i ${SSH_KEY} -oStrictHostKeyChecking=no -r ./ci_php_release/* thootau@192.168.76.252:/home/thootau/apache/release'
         }
 
