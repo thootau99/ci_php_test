@@ -60,4 +60,10 @@ pipeline {
     }
 
   }
+  post {
+    always {
+              echo '任務結束時清除工作區域'
+              deleteDir() /* clean up our workspace */
+    }
+  } 
 }
