@@ -13,6 +13,7 @@ pipeline {
           sh 'rsync -av ./build/* ./ci_php_release --exclude build --exclude=".*/"'
           sh 'git config --global user.email "thootau99@tutanota.com" && git config --global user.name "thootau"'
           sh '''
+            # 推到這個版本的 tag 上
             cd ci_php_release
             version=v$(cat ../.version)
             if [ $(git tag -l "$version") ]; then
@@ -23,6 +24,14 @@ pipeline {
 
             git tag -a $version -m "PUSH TO VERSION $version"
             git push origin $version
+
+            
+          '''
+          sh '''
+            cd ci_php_release
+            # 推到 latest 上
+            git tag -a latest -m "PUSH TO VERSION $version"
+            git push -f origin latest
           '''
         }
 
