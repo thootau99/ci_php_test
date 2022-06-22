@@ -31,7 +31,7 @@ pipeline {
             cd ci_php_release
             # 推到 latest 上
             git tag -fa latest -m "PUSH TO VERSION $version"
-            git push origin latest --tags
+            git push --force origin latest
           '''
         }
 
